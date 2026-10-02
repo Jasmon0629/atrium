@@ -1,0 +1,346 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * "Quiet console" theme (adopted 2026-09-21 from ../PruExpert/ui-theme).
+ *
+ * The idea in one line: white page, one hairline grey for every border, a
+ * light grey for inset surfaces, two greys of text, and a single accent used
+ * sparingly — primary button, brand line, active tab line, focus ring — and
+ * nothing else. Semantic tones (red / amber / green / grey) appear on badges
+ * only, never as decoration.
+ *
+ * Atrium's components use semantic token names (panel/paper/line/ink/brand-*),
+ * so the palette below maps those names onto the spec's six values:
+ *   panel = white card surface        paper = #f7f8fa inset (sidebar, hovers,
+ *   line  = #e5e7eb every border               table headers, code)
+ *   ink-900 = body text #1f2933       ink-400/500 = muted #6b7480
+ *   brand-400/600 = accent #ed1b2e    brand-700 = accent hover #b8121f
+ *   brand-50..300 = greys, so legacy "soft brand" fills read as insets.
+ *
+ * Dark theme is a class on <html> (set before first paint by index.html, kept
+ * in sync by lib/theme.ts): the same six roles remapped onto dark greys.
+ * ------------------------------------------------------------------------- */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-display: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Three weights only: 400 body, 500 values/buttons, 600 headings + active.
+     Legacy font-bold / font-extrabold utilities render as 600. */
+  --font-weight-bold: 600;
+  --font-weight-extrabold: 600;
+  --font-weight-black: 600;
+
+  /* Radii: 6px controls, 8px cards/inputs, 4px badges. Nothing else is round
+     except avatars, dots and the spinner. */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
+  --radius-3xl: 8px;
+
+  /* The one accent */
+  --color-brand: #ed1b2e;
+  --color-brand-dark: #b8121f;
+  --color-brand-50: #f7f8fa;
+  --color-brand-100: #eef0f3;
+  --color-brand-200: #e5e7eb;
+  --color-brand-300: #cfd4db;
+  --color-brand-400: #ed1b2e;
+  --color-brand-500: #ed1b2e;
+  --color-brand-600: #ed1b2e;
+  --color-brand-700: #b8121f;
+  --color-brand-800: #b8121f;
+  --color-brand-900: #1f2933;
+  --color-cta-from: #ed1b2e;
+  --color-cta-to: #ed1b2e;
+
+  /* Two greys of text (+ a lighter one for icons and placeholders) */
+  --color-ink: #1f2933;
+  --color-muted: #6b7480;
+  --color-ink-900: #1f2933;
+  --color-ink-800: #1f2933;
+  --color-ink-700: #3b4552;
+  --color-ink-600: #4b5563;
+  --color-ink-500: #6b7480;
+  --color-ink-400: #6b7480;
+  --color-ink-300: #9aa3ad;
+  --color-ink-200: #d1d5db;
+  --color-ink-100: #e5e7eb;
+
+  /* Surfaces */
+  --color-page: #ffffff;
+  --color-panel: #ffffff;
+  --color-paper: #f7f8fa;
+  --color-line: #e5e7eb;
+
+  /* Semantic tones — badges only (Tailwind red/amber/emerald/gray 100 + 800) */
+  --color-urgent: #991b1b;
+  --color-urgent-soft: #fee2e2;
+  --color-high: #92400e;
+  --color-high-soft: #fef3c7;
+  --color-normal: #374151;
+  --color-normal-soft: #f3f4f6;
+  --color-low: #6b7280;
+  --color-low-soft: #f3f4f6;
+  --color-success: #065f46;
+  --color-success-soft: #d1fae5;
+
+  /* Display (always dark) surfaces: the same discipline on dark greys */
+  --color-night-900: #0f1216;
+  --color-night-800: #151a20;
+  --color-night-700: #1d232b;
+  --color-night-line: #2a313b;
+  --color-night-text: #e5e7eb;
+  --color-night-muted: #8b94a0;
+
+  /* Borders, not shadows. The two allowed: active nav item (shadow-sm) and drawers/menus (shadow-pop). */
+  --shadow-card: 0 0 0 0 transparent;
+  --shadow-pop: 0 20px 50px -20px rgba(31, 41, 51, 0.35), 0 0 0 1px var(--color-line);
+
+  --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---- Dark theme: the same roles on dark greys ---- */
+.dark {
+  color-scheme: dark;
+  --color-page: #111418;
+  --color-panel: #111418;
+  --color-paper: #181c22;
+  --color-line: #262b33;
+
+  --color-ink: #e5e7eb;
+  --color-muted: #8b94a0;
+  --color-ink-900: #e5e7eb;
+  --color-ink-800: #e5e7eb;
+  --color-ink-700: #c3c9d1;
+  --color-ink-600: #aab1ba;
+  --color-ink-500: #8b94a0;
+  --color-ink-400: #8b94a0;
+  --color-ink-300: #5b6470;
+  --color-ink-200: #3a424c;
+  --color-ink-100: #262b33;
+
+  --color-brand-50: #181c22;
+  --color-brand-100: #1d232b;
+  --color-brand-200: #262b33;
+  --color-brand-300: #3a424c;
+  --color-brand-400: #f0313f;
+  --color-brand-500: #f0313f;
+  --color-brand-600: #f0313f;
+  --color-brand-700: #d51e2f;
+  --color-brand-800: #d51e2f;
+  --color-brand-900: #e5e7eb;
+
+  --color-urgent: #fca5a5;
+  --color-urgent-soft: #3b1a1a;
+  --color-high: #fcd34d;
+  --color-high-soft: #3a2a10;
+  --color-normal: #d1d5db;
+  --color-normal-soft: #262b33;
+  --color-low: #9aa3ad;
+  --color-low-soft: #1d232b;
+  --color-success: #6ee7b7;
+  --color-success-soft: #0f2e24;
+
+  --shadow-pop: 0 20px 50px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--color-line);
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+
+/* Keyboard focus is always visible; mouse clicks stay quiet. Lives in the base
+   layer so utilities (inputs' soft ring, dialog panels) can override it, and
+   skips programmatically focused containers (tabindex="-1"). */
+@layer base {
+  :focus-visible:not([tabindex="-1"]) {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+::selection {
+  background: color-mix(in srgb, var(--color-brand) 18%, transparent);
+}
+
+/* Cards: a hairline that darkens on hover. No lift, no shadow. */
+.card-lift { transition: border-color 0.14s ease, background-color 0.14s ease; }
+.card-lift:hover { border-color: var(--color-ink-300); }
+
+/* Primary call-to-action: flat accent, darker on hover. The only accent fill. */
+.btn-brand {
+  background: var(--color-brand);
+  transition: background-color 0.14s ease;
+}
+.btn-brand:hover { background: var(--color-brand-dark); }
+.btn-brand:active { background: var(--color-brand-dark); }
+
+/* Legacy headline accent: now plain ink */
+.text-grad { color: var(--color-ink-900); }
+
+/* Sticky bars: solid white with a hairline (no blur, no translucency) */
+.glass { background: var(--color-panel); }
+
+/* Inline reference pill (citation / tag inside flowing text) */
+.cite {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent);
+  color: var(--color-brand);
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  vertical-align: baseline;
+}
+
+/* Thin scrollbars for board + chat panes */
+.thin-scroll { scrollbar-width: thin; scrollbar-color: var(--color-ink-200) transparent; }
+.thin-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: var(--color-ink-200); border-radius: 8px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* Skeleton loading blocks */
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+.skeleton {
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    var(--color-paper) 0%,
+    color-mix(in srgb, var(--color-line) 60%, var(--color-paper)) 50%,
+    var(--color-paper) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* CSS-only tooltip: <span class="tip" data-tip="Label"> */
+.tip { position: relative; }
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 7px);
+  transform: translateX(-50%) translateY(3px);
+  white-space: nowrap;
+  background: var(--color-ink-900);
+  color: var(--color-panel);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease 0.35s, transform 0.12s ease 0.35s;
+  z-index: 60;
+}
+.tip[data-tip-side="bottom"]::after { bottom: auto; top: calc(100% + 7px); transform: translateX(-50%) translateY(-3px); }
+.tip[data-tip-side="right"]::after { bottom: auto; left: calc(100% + 7px); top: 50%; transform: translateY(-50%) translateX(-3px); }
+.tip:hover::after, .tip:focus-visible::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+.tip[data-tip-side="right"]:hover::after, .tip[data-tip-side="right"]:focus-visible::after { transform: translateY(-50%) translateX(0); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+@keyframes slide-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.anim-in { animation: slide-up 0.18s ease-out; }
+
+/* A card that a teammate just changed: the border darkens, then relaxes */
+@keyframes flash-ring {
+  0% { border-color: var(--color-ink-900); background-color: var(--color-paper); }
+  100% { border-color: var(--color-line); background-color: var(--color-panel); }
+}
+.flash { animation: flash-ring 1.4s var(--ease-soft) 1; }
+
+/* Notification bell wiggle */
+@keyframes bell-ring {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(14deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(6deg); }
+  80% { transform: rotate(-3deg); }
+}
+.bell-ring { animation: bell-ring 0.7s ease-in-out 1; transform-origin: 50% 0; }
+
+/* Display: no ambient glow any more; the class stays for callers */
+.kiosk-glow { display: none; }
+
+@keyframes ticker-in {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.ticker-item { animation: ticker-in 0.5s ease-out; }
+
+@keyframes count-pop {
+  0% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.count-pop { animation: count-pop 0.5s ease-out; display: inline-block; }
+
+/* Display card that just moved / changed: the border brightens, then relaxes */
+@keyframes kiosk-pulse {
+  0% { box-shadow: 0 0 0 1px var(--color-night-text); }
+  100% { box-shadow: 0 0 0 1px transparent; }
+}
+.kiosk-pulse { animation: kiosk-pulse 1.5s var(--ease-soft) 2; }
+
+/* Page enter: a keyed wrapper in App.tsx replays this on every route change */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+.page-in { animation: page-in 0.16s var(--ease-soft) both; }
+
+/* Display auto-tour: thin accent line filling over the dwell time (duration set inline) */
+@keyframes tour-fill { from { width: 0; } to { width: 100%; } }
+.kiosk-tour-bar { width: 0; animation: tour-fill linear forwards; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in { animation: fade-in 0.4s ease-out; }
+
+/* Drawer: slides in from the right */
+@keyframes drawer-in {
+  from { transform: translateX(24px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.drawer-in { animation: drawer-in 0.2s var(--ease-soft) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot, .anim-in, .flash, .bell-ring, .ticker-item, .count-pop,
+  .kiosk-pulse, .fade-in, .page-in, .kiosk-tour-bar, .drawer-in, .skeleton { animation: none; }
+}
+
+/* Chat: three bouncing dots while someone types */
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-3px); opacity: 1; }
+}
+.typing-dot { animation: typing-bounce 1.2s ease-in-out infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@media (prefers-reduced-motion: reduce) {
+  .typing-dot { animation: none; opacity: 0.7; }
+}

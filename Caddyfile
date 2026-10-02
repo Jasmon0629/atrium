@@ -1,0 +1,28 @@
+# HTTPS front door for Atrium. Values come from .env via docker-compose.
+# ATRIUM_HOST may hold several space-separated names (e.g. a DuckDNS name plus
+# the real domain); each gets an automatic Let's Encrypt certificate as soon as its
+# DNS record resolves to this instance (Caddy retries the others until then).
+
+# Security headers. No Permissions-Policy on purpose: the app uses the
+# microphone for speech input.
+(security) {
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+}
+
+{$ATRIUM_HOST:aidev.asmtech.international} {
+	import security
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	encode gzip
+	reverse_proxy atrium:4600
+}
+
+# Plain HTTP on the bare IP so the app is usable before DNS is set up.
+http://{$ATRIUM_IP:56.69.175.201} {
+	import security
+	reverse_proxy atrium:4600
+}

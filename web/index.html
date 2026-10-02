@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Stamped with the build id by the server (server/src/app.js) so open tabs can detect a deploy -->
+    <meta name="atrium-build" content="dev" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111418" media="(prefers-color-scheme: dark)" />
+    <title>Atrium — Workplace Command Center</title>
+    <script>
+      // Apply the saved theme before first paint so dark mode never flashes white.
+      try {
+        var t = localStorage.getItem('atrium-theme');
+        var dark = t === 'dark' || ((!t || t === 'system') && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Inter in the three weights the theme uses; the system stack takes over if it fails to load -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <!-- Installable: "Add to Home Screen" on phones, "Install Atrium" in desktop Chrome/Edge,
+         and a chrome-less full-screen window on the office display. -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="application-name" content="Atrium" />
+    <meta name="apple-mobile-web-app-title" content="Atrium" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

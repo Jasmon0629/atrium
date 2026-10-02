@@ -1,0 +1,13 @@
+{
+  "name": "atrium-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node realtime.test.js",
+    "shots": "node screenshots.js"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^23.0.0"
+  }
+}

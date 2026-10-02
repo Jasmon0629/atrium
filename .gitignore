@@ -1,0 +1,24 @@
+# Secrets — never commit
+lightsail-key
+*.key
+*.pem
+.env
+.env.*
+openclaw-token.json
+
+# Dependencies
+node_modules/
+
+# Build output & local data
+web/dist/
+server/data/
+*.db
+*.db-shm
+*.db-wal
+
+# Generated artifacts
+e2e/shots/
+*.tgz
+
+# Local tooling
+*.key.pub
